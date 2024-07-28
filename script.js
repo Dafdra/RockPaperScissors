@@ -24,31 +24,33 @@ let computerChoice = getComputerChoice().toLowerCase();
 console.log("Computer chose: " + computerChoice);
 console.log("Human chose: " + humanChoice);
 
-const humanScore = 0;
-const computerScore = 0;
+let humanScore = 0;
+let computerScore = 0;
 
 function playRound(humanChoice, computerChoice){
-    if (humanChoice === "rock" && computerChoice === "scissors"){
-        console.log("You Win!");
-    } else if (humanChoice === "paper" && computerChoice === "rock"){
-        console.log("You Win!");
-    } else if (humanChoice === "scissors" && computerChoice === "paper"){
-        console.log("You Win!");
+    if (humanChoice === "rock" && computerChoice === "scissors" ||
+        humanChoice === "paper" && computerChoice === "rock" ||
+        humanChoice === "scissors" && computerChoice === "paper"){
+            console.log("You Win!");
+            humanScore++;
     } else if (humanChoice === computerChoice){
         console.log("It's a draw!");
     } else {
         console.log("HA! You lose!");
+        computerScore++;
     }
 }
 
 playRound(humanChoice, computerChoice);
 
+let Scores = "Player: " + humanScore + " Computer: " + computerScore;
 
+function playGame(rounds){
+    for (let i = 0; i <rounds; i++){
+        const humanChoice = prompt("Enter your choice (rock, paper, scissors):").toLowerCase();
+        const computerChoice = getComputerChoice().toLowerCase();
+    playRound(humanChoice, computerChoice);
+    }
+}
 
-
-
-
-
-
-
-
+playGame(5);
