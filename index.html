@@ -5,7 +5,101 @@
 	<title>RockPaperScissors</title>
 </head>
 <body>
-	<script src="script.js"></script>
+	<h1>Rock, Paper, Scissors Game</h1>
+	<h2>To start the game, choose one:</h2>
 
+	<div id="buttonContainer"></div>
+	<div id="playerChoice">
+		<h3>You chose:</h3>
+		<span id="playerChoiceText"></span>
+	</div>
+	<div id="computerChoice">
+		<h3>Computer chose:</h3>
+		<span id="computerChoiceText"></span>
+	</div>
+	<div id="scores">
+		<h3>Scores:</h3>
+		<span id="scoresText">Player: 0 | Computer: 0</span>
+	</div>
+	<div id="winnerMessage">
+		<h3></h3>
+	</div>
+
+	<script>
+		var rockButton = document.createElement("button");
+		var paperButton = document.createElement("button");
+		var scissorsButton = document.createElement("button");
+
+		rockButton.textContent = "Rock";
+		paperButton.textContent = "Paper";
+		scissorsButton.textContent = "Scissors";
+
+		var buttonContainer = document.querySelector("#buttonContainer");
+		buttonContainer.appendChild(rockButton);
+		buttonContainer.appendChild(paperButton);
+		buttonContainer.appendChild(scissorsButton);
+
+		var playerScore = 0;
+		var computerScore = 0;
+		var gameOver = false;
+
+		// Function to get the computer's choice
+		function getComputerChoice(){
+			let result = Math.floor(Math.random() * 3);
+			if (result === 0) {
+				return "Rock";
+			} else if (result === 1) {
+				return "Paper";
+			} else {
+				return "Scissors";
+			}
+		}
+
+		// Function to play a round and update the scores
+		function playRound(playerChoice, computerChoice){
+			if (gameOver) return;  // Stop the game if it's over
+
+			let resultMessage;
+
+			if (playerChoice === "Rock" && computerChoice === "Scissors" ||
+				playerChoice === "Paper" && computerChoice === "Rock" ||
+				playerChoice === "Scissors" && computerChoice === "Paper"){
+					resultMessage = "You Win!";
+					playerScore++;
+			} else if (playerChoice === computerChoice){
+				resultMessage = "It's a draw!";
+			} else {
+				resultMessage = "HA! You lose!";
+				computerScore++;
+			}
+
+			// Update the displayed choices and scores
+			document.getElementById("playerChoiceText").textContent = playerChoice;
+			document.getElementById("computerChoiceText").textContent = computerChoice;
+			document.getElementById("scoresText").textContent = "Player: " + playerScore + " | Computer: " + computerScore;
+
+			// Check if either player has won 5 rounds
+			if (playerScore === 5) {
+				document.getElementById("winnerMessage").innerHTML = "<h3>Congratulations! You are the winner!</h3>";
+				gameOver = true;
+			} else if (computerScore === 5) {
+				document.getElementById("winnerMessage").innerHTML = "<h3>Sorry, the computer wins!</h3>";
+				gameOver = true;
+			}
+		}
+
+		// Add event listeners to the buttons
+		rockButton.addEventListener("click", function (){
+			playRound("Rock", getComputerChoice());
+		});
+
+		paperButton.addEventListener("click", function(){
+			playRound("Paper", getComputerChoice());
+		});
+
+		scissorsButton.addEventListener("click", function(){
+			playRound("Scissors", getComputerChoice());
+		});
+	</script>
 </body>
 </html>
